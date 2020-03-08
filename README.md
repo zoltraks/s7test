@@ -1,2 +1,1 @@
-# s7test
-Siemens S7 PLC Test program written in .NET Core
+Siemens S7 PLC Test program written for .NET Core
