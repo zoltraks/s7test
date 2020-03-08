@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>How much reality can you take?</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Energy.Core" Version="18.12.21" />
+    <PackageReference Include="S7netplus" Version="0.4.0" />
+  </ItemGroup>
+
+</Project>
