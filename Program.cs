@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Energy.Base;
+using System;
 using System.Diagnostics;
 
 namespace S7Test
@@ -30,7 +31,7 @@ namespace S7Test
             }
         }
 
-        private static void Setup(string[] args)
+        private static bool Setup(string[] args)
         {
             Energy.Base.Command.Arguments arguments = new Energy.Base.Command.Arguments(args)
                 .Parameter("type").Alias("t", "type")
@@ -40,8 +41,20 @@ namespace S7Test
                 .Parameter("slot").Alias("s", "slot")
                 .Switch("interactive").Alias("i", "interactive")
                 .Switch("quiet").Alias("q", "quiet")
+                .Parameter("execute").Alias("x", "execute")
+                .Switch("help").Alias("?", "help").Alias("8888", "help")
+                .Help("type", "PLC type")
+                .Description("type", "1200, 300, 200, 400, 1500 or LOGO")
+                .Example("type", "1200")
+                .Help("host", "IP host or address")
+                .Example("host", "192.168.0.1")
                 .Parse()
                 ;
+            if (!arguments["help"].IsEmpty)
+            {
+                PrintHelp(arguments);
+                return false;
+            }
             if (!arguments["type"].IsEmpty)
             {
                 Global.Configuration.Type = arguments["type"].Value;
@@ -64,6 +77,7 @@ namespace S7Test
             }
             Global.Configuration.Interactive = !arguments["interactive"].IsEmpty;
             Global.Configuration.Quiet = !arguments["quiet"].IsEmpty;
+            return true;
         }
 
         private static void Open()
@@ -144,6 +158,15 @@ namespace S7Test
                     }
                 }
             }
+        }
+
+        private static void PrintHelp(Command.Arguments arguments)
+        {
+            Console.WriteLine();
+            Console.WriteLine("OPTIONS");
+            Console.WriteLine();
+            string text = arguments.Print();
+            Console.WriteLine(text);
         }
 
         private static void Menu()
